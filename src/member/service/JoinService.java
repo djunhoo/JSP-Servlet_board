@@ -15,22 +15,21 @@ public class JoinService {
 	
 	public void join(JoinRequest joinReq) {
 		Connection conn = null;
-		
 		try {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
 			
-			Member member = memberDao.selectById(conn,  joinReq.getId());
-			if(member != null) {
+			Member member = memberDao.selectById(conn, joinReq.getId());
+			if (member != null) {
 				JdbcUtil.rollback(conn);
 				throw new DuplicateIdException();
 			}
 			
-			memberDao.insert(conn,
+			memberDao.insert(conn, 
 					new Member(
-							joinReq.getId(),
-							joinReq.getName(),
-							joinReq.getPassword(),
+							joinReq.getId(), 
+							joinReq.getName(), 
+							joinReq.getPassword(), 
 							new Date())
 					);
 			conn.commit();
@@ -40,8 +39,5 @@ public class JoinService {
 		} finally {
 			JdbcUtil.close(conn);
 		}
-
-		
 	}
-	
 }
