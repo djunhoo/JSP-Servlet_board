@@ -13,7 +13,7 @@ public class JoinService {
 
 	private MemberDao memberDao = new MemberDao();
 	
-	public void join(joinRequest joinReq) {
+	public void join(JoinRequest joinReq) {
 		Connection conn = null;
 		
 		try {
