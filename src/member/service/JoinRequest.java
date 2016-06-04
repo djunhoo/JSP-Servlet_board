@@ -2,7 +2,7 @@ package member.service;
 
 import java.util.Map;
 
-public class joinRequest {
+public class JoinRequest {
 	private String id;
 	private String name;
 	private String password;
@@ -12,7 +12,7 @@ public class joinRequest {
 		return id;
 	}
 	
-	public void SetId(String id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
