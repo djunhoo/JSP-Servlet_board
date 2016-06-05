@@ -25,7 +25,7 @@ public class ModifyArticleService {
 			if (article == null) {
 				throw new ArticleNotFoundException();
 			}
-			if (!canModify(modReq.getUserId(), article)) {
+			if (!PremissionChecker.conModify(modReq.getUserId(), article)) {
 				throw new PermissionDeniedException();
 			}
 			articleDao.update(conn, 
@@ -44,7 +44,4 @@ public class ModifyArticleService {
 		}
 	}
 
-	private boolean canModify(String modfyingUserId, Article article) {
-		return article.getWriter().getId().equals(modfyingUserId);
-	}
 }

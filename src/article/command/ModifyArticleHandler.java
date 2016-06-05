@@ -12,6 +12,7 @@ import article.service.ArticleNotFoundException;
 import article.service.ModifyArticleService;
 import article.service.ModifyRequest;
 import article.service.PermissionDeniedException;
+import article.service.PremissionChecker;
 import article.service.ReadArticleService;
 import auth.service.User;
 import mvc.command.CommandHandler;
@@ -42,7 +43,7 @@ public class ModifyArticleHandler implements CommandHandler {
 			int no = Integer.parseInt(noVal);
 			ArticleData articleData = readService.getArticle(no, false);
 			User authUser = (User) req.getSession().getAttribute("authUser");
-			if (!canModify(authUser, articleData)) {
+			if (!PremissionChecker.conModify (authUser.getId(), articleData.getArticle())){
 				res.sendError(HttpServletResponse.SC_FORBIDDEN);
 				return null;
 			}
@@ -56,11 +57,6 @@ public class ModifyArticleHandler implements CommandHandler {
 			res.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return null;
 		}
-	}
-
-	private boolean canModify(User authUser, ArticleData articleData) {
-		String writerId = articleData.getArticle().getWriter().getId();
-		return authUser.getId().equals(writerId);
 	}
 
 	private String processSubmit(HttpServletRequest req, HttpServletResponse res)
