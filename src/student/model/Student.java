@@ -94,7 +94,7 @@ public class Student {
       return grade;
    }
    
-   public double getAvg() {
+   public double getAverage() {
       return average;
    }
    

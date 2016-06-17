@@ -29,9 +29,9 @@ public class StudentDao {
 			pstmt.setInt(7, student.getMidterm());
 			pstmt.setInt(8, student.getFinalterm());
 			pstmt.setInt(9, student.getTotal());
-			pstmt.setDouble(10, student.getAvg());
+			pstmt.setDouble(10, student.getAverage());
 			pstmt.setString(11, student.getGrade());
-			// pstmt.setInt(12, 0);
+			//pstmt.setInt(12, 0);
 			int insertedCount = pstmt.executeUpdate();
 
 			if (insertedCount > 0) {
@@ -41,7 +41,7 @@ public class StudentDao {
 					Integer newNum = rs.getInt(1);
 					return new Student(newNum, student.getSubject(), student.getStudent_number(),
 							student.getDepartment(), student.getName(), student.getAttend(), student.getAssignment(),
-							student.getMidterm(), student.getFinalterm(), student.getTotal(), student.getAvg(),
+							student.getMidterm(), student.getFinalterm(), student.getTotal(), student.getAverage(),
 							student.getGrade(), 0);
 				}
 			}
@@ -53,11 +53,32 @@ public class StudentDao {
 
 		}
 	}
-	public List<Student> select(Connection conn) throws SQLException {
+	
+	public int selectCount(Connection conn, String subject) throws SQLException {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			pstmt = conn.prepareStatement("select * from student ");
+			pstmt = conn.prepareStatement("select count(*) from student where subject = " +
+								'?');
+			pstmt.setString(1, subject);
+			rs = pstmt.executeQuery(); //where subject = " + subject);
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+			return 0;
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
+	}
+	
+	public List<Student> select(Connection conn, String subject) throws SQLException {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select * from student where subject = " +
+											'?');// where subject = ?");
+			pstmt.setString(1, subject);
 			rs = pstmt.executeQuery();
 			List<Student> result = new ArrayList<>();
 			while(rs.next()) {
@@ -84,5 +105,44 @@ public class StudentDao {
 							rs.getDouble("average"),
 							"0",
 							0);
+	}
+	
+	public void delete(Connection conn, int no) throws SQLException {
+		try (PreparedStatement pstmt = 
+				conn.prepareStatement(
+						"delete from student where student_no = ?")){
+			pstmt.setInt(1, no);
+			pstmt.executeUpdate();
+		}
+	}
+	
+	public int updateGrade(Connection conn, int no, String grade, int ranking) throws SQLException {
+		try(PreparedStatement pstmt = conn.prepareStatement("update student set grade = ?, ranking = ?" + 
+															"where student_no = ?")) {
+			pstmt.setString(1, grade);
+			pstmt.setInt(2, ranking);
+			pstmt.setInt(3, no);
+			return pstmt.executeUpdate();
+		}
+	}
+	
+	public Student selectById(Connection conn, int no) throws SQLException {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = conn.prepareStatement("select * from student where student_no = ?");
+			pstmt.setInt(1,  no);
+			rs = pstmt.executeQuery();
+			Student student = null;
+			if(rs.next())
+			{
+				student = convertStudent(rs);
+			}
+			return student;
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+		}
 	}
 }

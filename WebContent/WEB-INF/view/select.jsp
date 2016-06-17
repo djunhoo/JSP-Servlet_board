@@ -45,12 +45,12 @@
                         <a href="#about">About</a>
                     </li>
                     <li>
-                        <a href="student/list.do">성적 입력</a>
+                        <a href="#services">성적 입력</a>
                     </li>
                     <li>
-                        <a href="article/list.do">자유게시판</a>
+                        <a href="#contact">자유게시판</a>
                     </li>
-                            <u:isLogin>
+                                                <u:isLogin>
                             <li>
 							<!--  	CT: ${authUser.name}님, 안녕하세요. -->
 								<a href="logout.do">로그 아웃</a>
@@ -109,57 +109,18 @@
 
     <!-- Page Content -->
 
-	<a  name="services"></a>
-    <div class="content-section-a">
-
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5 col-sm-6">
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                    <h2 class="section-heading">빠르고 쉽게 성적을 처리하세요:<br>특별한 당신의 파트너</h2>
-                    <p class="lead">쉽고 빠르게 성적을 처리할 수 있습니다. 20124050 이건호입니다.</p>
-                </div>
-                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                    <img class="img-responsive" src="img/ipad.png" alt="">
-                </div>
-            </div>
-
-        </div>
-        <!-- /.container -->
-
-    </div>
-    <!-- /.content-section-a -->
-
-
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="list-inline">
-                        <li>
-                            <a href="#">홈</a>
-                        </li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li>
-                            <a href="#about">About</a>
-                        </li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li>
-                            <a href="#services">성적 입력</a>
-                        </li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li>
-                            <a href="#contact">자유게시판</a>
-                        </li>
-                    </ul>
-                    <p class="copyright text-muted small">Copyright &copy; 이건호 2016. All Rights Reserved</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+		<div class="form-group">
+		  <form action="list.do" method="GET">
+			  <label for="sel1">과목 선택 조회</label>
+			  <select class="form-control" name="subject">
+		 		<option value="영어">영어</option>
+		 		<option value="수학">수학</option>
+		 		<option value="과학">과학</option>
+		 		<option value="국사">국사</option>
+		 		<option value="전산">전산</option>
+			  </select>
+		  </form>
+		</div>
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>

@@ -48,7 +48,7 @@ public class WriteStudentService {
     		  req.getStudent().getMidterm(),
     		  req.getStudent().getFinalterm(),
     		  req.getStudent().getTotal(),
-    		  req.getStudent().getAvg(),
+    		  req.getStudent().getAverage(),
     		  req.getStudent().getGrade(),
     		  req.getStudent().getRanking());
    }
